@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.QuestionActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/view_feed_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/contentRootQuestionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:background="@color/bg_comments"
+        android:elevation="@dimen/default_elevation"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivQuestionLayout"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/img_feed_bottom_1"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvCommentsQuestionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/shadow_top"/>
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>

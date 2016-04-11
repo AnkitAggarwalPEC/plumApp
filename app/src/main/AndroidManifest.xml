@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.github.froger.instamaterial">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <application
+        android:name=".InstaMaterialApplication"
+        android:icon="@drawable/ic_launcher"
+        android:label="try"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.CommentsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransparentActivity" />
+
+        <activity
+            android:name=".ui.activity.QuestionActivityLast"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".ui.activity.UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".ui.activity.TakePhotoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.TransparentActivity" />
+        <activity
+            android:name=".ui.activity.QuestionPublishActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden">
+
+        </activity>
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="H5hlEhLdxinHlTqbBqFuzdQ8MkKQSHgeDQvtZCIL" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="94qXPDzNJZkdkcjr2CUsIXzAmCogfPjLZ7zx5jUv" />
+    </application>
+
+</manifest>

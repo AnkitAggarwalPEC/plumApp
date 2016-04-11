@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?><!-- item_feed.xml -->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardBackgroundColor="#fff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:paddingLeft="5dp"
+            android:id="@+id/ivUserProfileWithoutImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile_img"
+            android:background="@android:color/background_light"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="#cccccc" />
+        <TextView
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:minHeight="131dp"
+            android:layout_height="wrap_content"
+            android:text="Which option you like the bests sfndsmf  smfklsdnf  ksfksdf smfdmsf sfkdsfsm ndfdnm nsdfndm nsdmfndsmf nsjdnfmsdnf nsdmfnsdmfndsm msnfmsdfndsmf snfsdfnms ?"
+            android:textSize="15dp"
+            android:textColor="@android:color/background_dark"
+            android:gravity="center"
+            android:background="@android:color/background_light"
+
+
+            android:scrollHorizontally="false"
+            android:ellipsize="none"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="#cccccc" />
+
+        <TextView
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Desciption ?"
+            android:textSize="15dp"
+            android:textColor="@android:color/secondary_text_light"
+            android:gravity="left"
+            android:background="@android:color/background_light"
+
+
+            android:scrollHorizontally="false"
+            android:ellipsize="none"
+            android:paddingBottom   ="25dp"
+            />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|left">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_heart_small_blue"
+                android:background="@android:color/background_light"
+                />
+
+            <TextSwitcher
+                android:id="@+id/tsLikesCounterWithoutImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:inAnimation="@anim/slide_in_likes_counter"
+                android:outAnimation="@anim/slide_out_likes_counter">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="123 like"
+                    android:textColor="@color/text_like_counter" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_like_counter" />
+            </TextSwitcher>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp"
+            android:weightSum="1">
+
+            <ImageButton
+                android:id="@+id/btnLikeWithoutImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_heart_outline_grey" />
+
+            <ImageButton
+                android:id="@+id/btnCommentsWithoutImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_feed_action"
+                android:src="@drawable/ic_comment_outline_grey" />
+
+            <ImageButton
+                android:id="@+id/btnMoreWithoutImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/btn_feed_action"
+                android:layout_gravity="right"
+                android:src="@drawable/ic_more_grey" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
