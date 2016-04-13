@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.hugo'
-
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -32,6 +33,7 @@ dependencies {
     compile 'com.commonsware.cwac:camera:0.7.+'
     compile 'com.parse.bolts:bolts-android:1.+'
     compile 'com.parse:parse-android:1.+'
+    compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.quinny898.library.persistentsearch:library:1.1.0-SNAPSHOT'
 
 }

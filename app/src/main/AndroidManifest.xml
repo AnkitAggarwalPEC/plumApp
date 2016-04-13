@@ -57,6 +57,9 @@
             android:name="com.parse.APPLICATION_ID"
             android:value="H5hlEhLdxinHlTqbBqFuzdQ8MkKQSHgeDQvtZCIL" />
         <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="94qXPDzNJZkdkcjr2CUsIXzAmCogfPjLZ7zx5jUv" />
     </application>
