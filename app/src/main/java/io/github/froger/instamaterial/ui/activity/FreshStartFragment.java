@@ -1,5 +1,6 @@
 package io.github.froger.instamaterial.ui.activity;
 
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
