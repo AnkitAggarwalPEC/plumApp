@@ -30,7 +30,7 @@ public class FreshStartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
         ImageView img = (ImageView)view.findViewById(R.id.imageView);
         img.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.MainBack, 400, 400));
+                decodeSampledBitmapFromResource(getResources(), R.drawable.main_back, 400, 400));
         btn = (Button)view.findViewById(R.id.button4);
         btn.setOnClickListener(
                 new View.OnClickListener() {

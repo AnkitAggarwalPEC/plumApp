@@ -4,11 +4,9 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +50,7 @@ public class SelectTags extends Fragment implements View.OnClickListener{
         ImageView img = (ImageView)view.findViewById(R.id.imageView);
         signinarea = (RelativeLayout)view.findViewById(R.id.signinarea);
         img.setImageBitmap(
-                decodeSampledBitmapFromResource(getResources(), R.drawable.MainBack, 400, 400));
+                decodeSampledBitmapFromResource(getResources(), R.drawable.main_back, 400, 400));
         button = (Button)view.findViewById(R.id.button);
         button2 = (Button)view.findViewById(R.id.button2);
         button3 = (Button)view.findViewById(R.id.button3);

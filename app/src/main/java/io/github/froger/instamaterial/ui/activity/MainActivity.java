@@ -57,8 +57,6 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this);
 
         setContentView(R.layout.activity_main);
         setupFeed();
