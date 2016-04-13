@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/info"
+        
         android:text="Why don't you login back!!"
         android:textColor="@color/white"
         android:textSize="18sp"
