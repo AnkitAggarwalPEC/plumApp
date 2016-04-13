@@ -7,7 +7,8 @@
 
     <color name="fab_color_pressed">#007787</color>
     <color name="fab_color_shadow">#44000000</color>
-
+    <color name="black_overlay">#66000000</color>
+    <color name="textcolor">#000000</color>
     <color name="btn_default_light_normal">#00000000</color>
     <color name="btn_default_light_pressed">#40ffffff</color>
     <color name="btn_send_normal">#02c754</color>

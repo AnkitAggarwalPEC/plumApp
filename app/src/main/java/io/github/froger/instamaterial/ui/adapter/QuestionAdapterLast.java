@@ -53,7 +53,6 @@ public class QuestionAdapterLast extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public QuestionAdapterLast(Context context) {
         this.context = context;
-
     }
 
     @Override
@@ -117,7 +116,7 @@ public class QuestionAdapterLast extends RecyclerView.Adapter<RecyclerView.ViewH
             mChart.setUsePercentValues(true);
             mChart.setDescription("Sample Chart");
             mChart.setHoleColor(Color.parseColor("#FFFFFF"));
-            mChart.setHoleRadius(10);
+            mChart.setHoleRadius(20);
             mChart.setTransparentCircleRadius(10);
             mChart.setRotationAngle(0);
             mChart.setRotationEnabled(true);
