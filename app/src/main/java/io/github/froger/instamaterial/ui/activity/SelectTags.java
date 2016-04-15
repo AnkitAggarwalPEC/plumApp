@@ -60,6 +60,7 @@ public class SelectTags extends Fragment implements View.OnClickListener{
         ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permission, new LogInCallback() {
                     @Override
                     public void done(ParseUser user, com.parse.ParseException e) {
+                        dialog.dismiss();
                         if (user == null) {
                             Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
                         } else if (user.isNew()) {
