@@ -4,6 +4,7 @@ package io.github.froger.instamaterial.ui.activity;
 import android.annotation.SuppressLint;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,7 +19,20 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+
 import io.github.froger.instamaterial.R;
+import io.github.froger.instamaterial.ui.parse_backend.Activity;
+import io.github.froger.instamaterial.ui.parse_backend.Category;
+import io.github.froger.instamaterial.ui.parse_backend.Comment;
+import io.github.froger.instamaterial.ui.parse_backend.Like;
+import io.github.froger.instamaterial.ui.parse_backend.Photo;
+import io.github.froger.instamaterial.ui.parse_backend.Question;
+import io.github.froger.instamaterial.ui.parse_backend.QuestionOption;
+import io.github.froger.instamaterial.ui.parse_backend.Tags;
 
 /**
  * Created by ankit on 13/4/16.
@@ -82,7 +96,17 @@ public class FreshStart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
-
+        ParseObject.registerSubclass(Activity.class);
+        ParseObject.registerSubclass(Comment.class);
+        ParseObject.registerSubclass(Like.class);
+        ParseObject.registerSubclass(Photo.class);
+        ParseObject.registerSubclass(Question.class);
+        ParseObject.registerSubclass(QuestionOption.class);
+        ParseObject.registerSubclass(Category.class);
+        ParseObject.registerSubclass(Tags.class);
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this);
+        ParseFacebookUtils.initialize(getApplicationContext());
         mViewPager = (ViewPager) findViewById(R.id.LoginPager);
         FragmentManager frm = getSupportFragmentManager();
         mViewPager.setAdapter(new SectionsPagerAdapter(frm));
@@ -161,4 +185,10 @@ public class FreshStart extends AppCompatActivity {
         fragmentTransaction.replace(android.R.id.content, fragment);
         fragmentTransaction.commit();
     }
+    @Override
+     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

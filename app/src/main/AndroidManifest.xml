@@ -3,6 +3,9 @@
     package="io.github.froger.instamaterial">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -62,6 +65,8 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="94qXPDzNJZkdkcjr2CUsIXzAmCogfPjLZ7zx5jUv" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="979605538791396"/>
     </application>
 
 </manifest>

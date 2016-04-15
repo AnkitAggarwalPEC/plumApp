@@ -1,5 +1,7 @@
 package io.github.froger.instamaterial.ui.activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.parse.LogInCallback;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseUser;
+
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
+
 import io.github.froger.instamaterial.R;
 
 /**
@@ -35,12 +47,36 @@ public class SelectTags extends Fragment implements View.OnClickListener{
             btnrelationships,btnreligion,btnscience,
             btnshopping,btncricket,btnsports,
             btntechnology,btntravel;
-    Button button,button2,button3;
+    Button loginFacebook;
     TextView textviewsignin;
     View view;
     RelativeLayout signinarea;
 
     public SelectTags(){
+    }
+    private void onLoginButtonClicked(){
+        final ProgressDialog dialog = ProgressDialog.show(getActivity(), "Loading...", "Please wait...", true);
+        List<String> permission = Arrays.asList("public_profile","user_about_me","user_friends");
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permission, new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, com.parse.ParseException e) {
+                        if (user == null) {
+                            Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                        } else if (user.isNew()) {
+                            Log.d("MyApp", "User signed up and logged in through Facebook!");
+                            showFeedActivity();
+                        } else {
+                            Log.d("MyApp", "User logged in through Facebook!");
+                            showFeedActivity();
+                        }
+                    }
+                }
+        );
+    }
+    private void showFeedActivity(){
+        Intent intent = new Intent(getActivity(),MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
     @Nullable
     @Override
@@ -51,11 +87,18 @@ public class SelectTags extends Fragment implements View.OnClickListener{
         signinarea = (RelativeLayout)view.findViewById(R.id.signinarea);
         img.setImageBitmap(
                 decodeSampledBitmapFromResource(getResources(), R.drawable.main_back, 400, 400));
-        button = (Button)view.findViewById(R.id.button);
-        button2 = (Button)view.findViewById(R.id.button2);
-        button3 = (Button)view.findViewById(R.id.button3);
-
-        textviewsignin = (TextView)view.findViewById(R.id.textviewsignin);
+        loginFacebook = (Button)view.findViewById(R.id.LoginFacebook);
+        loginFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("LOGGING", "Login Button Clicked");
+                onLoginButtonClicked();
+            }
+        });
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)){
+            showFeedActivity();
+        }
         check();
         btnanimals = (Button)view.findViewById(R.id.btnanimals);
         btnautomobiles = (Button)view.findViewById(R.id.btnautomobiles);

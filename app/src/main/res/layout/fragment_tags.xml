@@ -17,9 +17,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Categories"
+            android:text="Select atleast 3 categories"
             android:textColor="#ffffff"
-            android:textSize="30dp"
+            android:textSize="25dp"
+            android:layout_gravity="center"
             android:id="@+id/frag2textview"
             android:textAlignment="center"
             android:layout_marginBottom="20dp" />
@@ -395,50 +396,20 @@
         android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
         android:id="@+id/signinarea">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign In with Twitter"
-            android:id="@+id/button"
-            android:background="@drawable/rect"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:padding="5dp"
-            android:layout_marginBottom="2dp"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign In with Facebook"
-            android:layout_below="@+id/button"
-            android:id="@+id/button2"
-            android:background="@drawable/rect"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:id="@+id/LoginFacebook"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/button_login"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:padding="5dp"
-            android:layout_marginBottom="2dp"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign In with Google"
-            android:layout_below="@+id/button2"
-            android:id="@+id/button3"
-            android:background="@drawable/rect"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:padding="5dp"
-            android:layout_marginBottom="2dp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/button3"
-            android:text="Prefer to sign in with email?"
-            android:id="@+id/textviewsignin"
-            android:textAlignment="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColor="#ffffff"
-            android:textSize="16dp"
-            android:padding="5dp"/>
+            android:layout_marginBottom="45dp"/>
     </RelativeLayout>
 
 </RelativeLayout>
