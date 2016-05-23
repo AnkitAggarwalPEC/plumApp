@@ -4,7 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
+
 import io.github.froger.instamaterial.ui.parse_backend.Question;
+import io.github.froger.instamaterial.ui.parse_backend.Basicfunctionality;
 
 /**
  * Created by ankit on 17/4/16.
@@ -19,8 +23,10 @@ public class FeedAdapterParse extends ParseRecyclerQueryAdapter<Question , FeedA
     public static final int TEXT_QUESTION = 1;
     public static final int ADD_NEW_QUESTION = 2;
 
-    FeedAdapterParse(boolean  hasStableIds) {
-        super(Question.class,hasStableIds);
+    private static  ParseQueryAdapter.QueryFactory<Question> query;
+    public  FeedAdapterParse(ParseQueryAdapter.QueryFactory<Question> query,boolean  hasStableIds) {
+        super(query,hasStableIds);
+        this.query = query;
     }
 
     @Override
@@ -50,4 +56,5 @@ public class FeedAdapterParse extends ParseRecyclerQueryAdapter<Question , FeedA
 
         }
     }
+
 }

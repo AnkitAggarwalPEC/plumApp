@@ -94,7 +94,7 @@ public class Basicfunctionality {
     }
     //need to get objectid and store them it in the array so that when user clicks on question pass it to getQuestionDetail as ObjectID also in the
 
-    public ParseQuery<Question> getFeedQuery(){
+    public static ParseQuery<Question> getFeedQuery(){
 
         ParseQuery<Activity> followingActivityQuery = ParseQuery.getQuery(Activity.class);
         followingActivityQuery.whereMatches("type", "follow");

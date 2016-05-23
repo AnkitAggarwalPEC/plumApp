@@ -22,7 +22,7 @@ public abstract class ParseRecyclerQueryAdapter <T extends ParseObject
     private final List<OnDataSetChangedListener> mDataSetListeners;
     private final List<OnQueryLoadListener<T>> mQueryListeners;
 
-    public ParseRecyclerQueryAdapter(final QueryFactory<T> parseQuery,final  boolean hasStableIds){
+    public ParseRecyclerQueryAdapter(QueryFactory<T> parseQuery,final  boolean hasStableIds){
         this.parseQuery = parseQuery;
         this.hasStableIds = hasStableIds;
         items = new ArrayList<>();

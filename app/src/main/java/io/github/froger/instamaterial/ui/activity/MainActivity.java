@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.content.pm.PackageInstaller;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -28,12 +29,16 @@ import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 
 import com.facebook.GraphResponse;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseInstallation;
 import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -49,8 +54,11 @@ import hugo.weaving.DebugLog;
 import io.github.froger.instamaterial.R;
 import io.github.froger.instamaterial.Utils;
 import io.github.froger.instamaterial.ui.adapter.FeedAdapter;
+import io.github.froger.instamaterial.ui.adapter.FeedAdapterParse;
 import io.github.froger.instamaterial.ui.adapter.FeedItemAnimator;
 import io.github.froger.instamaterial.ui.parse_backend.Activity;
+import io.github.froger.instamaterial.ui.parse_backend.Basicfunctionality;
+import io.github.froger.instamaterial.ui.parse_backend.Question;
 import io.github.froger.instamaterial.ui.view.FeedContextMenu;
 import io.github.froger.instamaterial.ui.view.FeedContextMenuManager;
 
@@ -72,6 +80,11 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     private FeedAdapter feedAdapter;
     private ParseUser currentUser;
     private boolean pendingIntroAnimation;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +99,15 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
             feedAdapter.updateItems(false);
         }
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        if(accessToken == null)
-        {
+        if (accessToken == null) {
             makeMeRequest();
         }
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
-    private void followFacebookFriends(AccessToken accessToken){
+
+    private void followFacebookFriends(AccessToken accessToken) {
         GraphRequest request = GraphRequest.newMyFriendsRequest(accessToken,
                 new GraphRequest.GraphJSONArrayCallback() {
                     @Override
@@ -118,29 +134,31 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                                 }
                             });
                         } else if (response.getError() != null) {
-                            Log.i("MYAPP",response.getError().getErrorMessage());
+                            Log.i("MYAPP", response.getError().getErrorMessage());
                         }
                     }
                 });
         request.executeAsync();
     }
-    private List<String> toIdList(JSONArray objects){
+
+    private List<String> toIdList(JSONArray objects) {
         List<String> ids = new ArrayList<String>();
         try {
             int sz = objects.length();
-            for( int i = 0; i < sz ; i++){
+            for (int i = 0; i < sz; i++) {
                 JSONObject row = objects.getJSONObject(i);
                 ids.add(row.getString("id"));
             }
-        }catch (JSONException exp){
+        } catch (JSONException exp) {
             exp.printStackTrace();
         }
         return ids;
     }
+
     // handle error conditions
-    private void makeMeRequest(){
+    private void makeMeRequest() {
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        GraphRequest request  = GraphRequest.newMeRequest(
+        GraphRequest request = GraphRequest.newMeRequest(
                 accessToken,
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
@@ -148,29 +166,28 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                             JSONObject object,
                             GraphResponse response) {
                         // Application code
-                        try{
+                        try {
                             //need to fetch userPIC;
                             currentUser.put("facebookId", object.get("id").toString());
                             currentUser.setUsername(object.getString("name").toString());
                             currentUser.saveInBackground();
-                            if(currentUser.get("followingFacebookFriend")!= null
+                            if (currentUser.get("followingFacebookFriend") != null
                                     && (Boolean)
-                                    (currentUser.get("followingFacebookFriend"))){
+                                    (currentUser.get("followingFacebookFriend"))) {
                                 Log.i("MYAPP", "ALREADY FOLLOWING");
-                            }
-                            else{
+                            } else {
                                 followFacebookFriends(accessToken);
                             }
-                        } catch (JSONException ex){
+                        } catch (JSONException ex) {
                             ex.printStackTrace();
                         }
                         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                        installation.put("user",currentUser);
+                        installation.put("user", currentUser);
                         installation.saveInBackground();
                     }
                 });
         Bundle parameter = new Bundle();
-        parameter.putString("field","id,name,link");
+        parameter.putString("field", "id,name,link");
         request.setParameters(parameter);
         request.executeAsync();
     }
@@ -182,11 +199,11 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                 return 300;
             }
         };
-        rvFeed.setLayoutManager(new StaggeredGridLayoutManager(2,1));
+        rvFeed.setLayoutManager(new StaggeredGridLayoutManager(2, 1));
 
         feedAdapter = new FeedAdapter(this);
         feedAdapter.setOnFeedItemClickListener(this);
-
+        FeedAdapterParse feedAdapterParse = new FeedAdapterParse(makeMeQuery(), true);
         rvFeed.setAdapter(feedAdapter);
         rvFeed.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -195,6 +212,15 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
             }
         });
         rvFeed.setItemAnimator(new FeedItemAnimator());
+    }
+
+    private ParseQueryAdapter.QueryFactory<Question> makeMeQuery() {
+        return new ParseQueryAdapter.QueryFactory<Question>() {
+            @Override
+            public ParseQuery<Question> create() {
+                return Basicfunctionality.getFeedQuery();
+            }
+        };
     }
 
     @Override
@@ -270,6 +296,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
                 .start();
 
     }
+
     private void startContentAnimation() {
         fabCreate.animate()
                 .translationY(0)
@@ -284,7 +311,7 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
     public void onCommentsClick(View v, int position) {
         int[] startingLocation = new int[2];
         v.getLocationOnScreen(startingLocation);
-        QuestionActivityLast.startQuestionFromLocation(startingLocation,this);
+        QuestionActivityLast.startQuestionFromLocation(startingLocation, this);
         overridePendingTransition(0, 0);
     }
 
@@ -333,5 +360,45 @@ public class MainActivity extends BaseDrawerActivity implements FeedAdapter.OnFe
 
     public void showLikedSnackbar() {
         Snackbar.make(clContent, "Liked!", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://io.github.froger.instamaterial.ui.activity/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://io.github.froger.instamaterial.ui.activity/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 }
