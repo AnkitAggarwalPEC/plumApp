@@ -12,7 +12,9 @@ import java.util.List;
 /**
  * Created by ankit on 17/4/16.
  */
-public abstract class ParseRecyclerQueryAdapter <T extends ParseObject,U extends RecyclerView.ViewHolder> extends  RecyclerView.Adapter<U> {
+public abstract class ParseRecyclerQueryAdapter <T extends ParseObject
+        ,U extends RecyclerView.ViewHolder>
+        extends  RecyclerView.Adapter<U> {
 
     private final QueryFactory<T> parseQuery;
     private final boolean hasStableIds;
@@ -126,6 +128,9 @@ public abstract class ParseRecyclerQueryAdapter <T extends ParseObject,U extends
             }
         });
     }
-
+    //call dataSetChange after this
+    public void addNewObject(int position , T object){
+        items.add(position,object);
+    }
 
 }

@@ -6,7 +6,9 @@
 //CREATE A CLOUD CODE FOR POSTING QUESTION/////
 package io.github.froger.instamaterial.ui.parse_backend;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.parse.FindCallback;
@@ -91,6 +93,28 @@ public class Basicfunctionality {
         return question.getObjectId();
     }
     //need to get objectid and store them it in the array so that when user clicks on question pass it to getQuestionDetail as ObjectID also in the
+
+    public ParseQuery<Question> getFeedQuery(){
+
+        ParseQuery<Activity> followingActivityQuery = ParseQuery.getQuery(Activity.class);
+        followingActivityQuery.whereMatches("type", "follow");
+        followingActivityQuery.whereEqualTo("fromUser", ParseUser.getCurrentUser());
+
+        ParseQuery<Question> questionFromFollowedUser = ParseQuery.getQuery(Question.class);
+        questionFromFollowedUser.whereMatchesKeyInQuery("author", "toUser", followingActivityQuery);
+
+        ParseQuery<Question> questionFromCurrentUser = ParseQuery.getQuery(Question.class);
+        questionFromFollowedUser.whereEqualTo("author", ParseUser.getCurrentUser());
+
+        ParseQuery<Question> trendingQuestion = ParseQuery.getQuery(Question.class);
+        trendingQuestion.orderByDescending("likes,votes");
+        trendingQuestion.setLimit(10);
+
+        ParseQuery<Question> finalQuery = ParseQuery.or(Arrays.asList(trendingQuestion,questionFromFollowedUser,questionFromCurrentUser));
+        finalQuery.include("user");
+        finalQuery.orderByDescending("createdAt");
+        return  finalQuery;
+    }
     public void getTrendingQuestion(){
 
         ParseQuery<Question> trendingQuestion = ParseQuery.getQuery(Question.class);
