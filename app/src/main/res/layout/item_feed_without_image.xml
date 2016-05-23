@@ -28,6 +28,7 @@
             android:layout_gravity="bottom"
             android:background="#cccccc" />
         <TextView
+            android:id ="@+id/questionTittleWithoutImage"
             android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:minHeight="131dp"
@@ -37,8 +38,6 @@
             android:textColor="@android:color/background_dark"
             android:gravity="center"
             android:background="@android:color/background_light"
-
-
             android:scrollHorizontally="false"
             android:ellipsize="none"
             />
@@ -49,6 +48,7 @@
             android:background="#cccccc" />
 
         <TextView
+            android:id="@+id/descriptionWithoutImage"
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
             android:layout_width="match_parent"
@@ -58,14 +58,10 @@
             android:textColor="@android:color/secondary_text_light"
             android:gravity="left"
             android:background="@android:color/background_light"
-
-
             android:scrollHorizontally="false"
             android:ellipsize="none"
             android:paddingBottom   ="25dp"
             />
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

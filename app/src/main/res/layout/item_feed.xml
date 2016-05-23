@@ -7,9 +7,7 @@
     android:layout_gravity="center"
     android:layout_margin="8dp"
     card_view:cardCornerRadius="4dp"
-    card_view:cardBackgroundColor="#fff"
-
-    >
+    card_view:cardBackgroundColor="#fff">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,15 +49,24 @@
         </io.github.froger.instamaterial.ui.view.SquaredFrameLayout>
 
 
-        <ImageView
-            android:id="@+id/ivFeedBottom"
+        <TextView
+            android:id="@+id/description"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="Desciption ?"
+            android:textSize="15dp"
+            android:textColor="@android:color/secondary_text_light"
+            android:gravity="left"
+            android:background="@android:color/background_light"
+            android:scrollHorizontally="false"
+            android:ellipsize="none"
+            android:paddingBottom   ="25dp"
+            />
 
 
-
-
-    <LinearLayout
+        <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center_vertical|left">
