@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:shubifubi="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/action_save"
+        android:icon="@drawable/ic_done_white_48dp"
+        android:title="save"
+        shubifubi:showAsAction="always"/>
+
+    <!--    <item android:id="@+id/action_nosave"
+            android:icon="@drawable/ic_close_white_24dp"
+            android:showAsAction="ifRoom"
+            android:title="close"/>
+    -->
+
+</menu>

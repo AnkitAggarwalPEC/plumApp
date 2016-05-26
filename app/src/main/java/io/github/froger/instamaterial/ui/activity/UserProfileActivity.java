@@ -126,7 +126,7 @@ public class UserProfileActivity extends BaseDrawerActivity {
         tabLayout.addTab(questions, 0);
         tabLayout.addTab(answered, 1);
 
-        tabLayout.setTabTextColors(ContextCompat.getColorStateList(this, R.color.tab_selector));
+        //tabLayout.setTabTextColors(ContextCompat.getColorStateList(this, R.color.tab_selector));
         tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.indicator));
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
