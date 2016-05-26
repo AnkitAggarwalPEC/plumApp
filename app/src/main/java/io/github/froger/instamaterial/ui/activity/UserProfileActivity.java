@@ -4,27 +4,27 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import io.github.froger.instamaterial.R;
 import io.github.froger.instamaterial.ui.adapter.UserProfileAdapter;
+import io.github.froger.instamaterial.ui.adapter.ViewPagerAdapter;
 import io.github.froger.instamaterial.ui.utils.CircleTransformation;
 import io.github.froger.instamaterial.ui.view.RevealBackgroundView;
 
-/**
- * Created by Miroslaw Stanek on 14.01.15.
- */
-public class UserProfileActivity extends BaseDrawerActivity implements RevealBackgroundView.OnStateChangeListener {
+public class UserProfileActivity extends BaseDrawerActivity {
+
     public static final String ARG_REVEAL_START_LOCATION = "reveal_start_location";
 
     private static final int USER_OPTIONS_ANIMATION_DELAY = 300;
@@ -32,11 +32,12 @@ public class UserProfileActivity extends BaseDrawerActivity implements RevealBac
 
     @Bind(R.id.vRevealBackground)
     RevealBackgroundView vRevealBackground;
-    @Bind(R.id.rvUserProfile)
-    RecyclerView rvUserProfile;
+    /*@Bind(R.id.rvUserProfile)
+    RecyclerView rvUserProfile;*/
 
-    @Bind(R.id.tlUserProfileTabs)
-    TabLayout tlUserProfileTabs;
+
+    /*@Bind(R.id.tabLayout)
+    TabLayout tabLayout;*/
 
     @Bind(R.id.ivUserProfilePhoto)
     ImageView ivUserProfilePhoto;
@@ -48,10 +49,18 @@ public class UserProfileActivity extends BaseDrawerActivity implements RevealBac
     View vUserStats;
     @Bind(R.id.vUserProfileRoot)
     View vUserProfileRoot;
+    @Bind(R.id.Layout1)
+    LinearLayout tvfollowers;
+    @Bind(R.id.Layout2)
+    LinearLayout tvfollowing;
 
     private int avatarSize;
     private String profilePhoto;
     private UserProfileAdapter userPhotosAdapter;
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
 
     public static void startUserProfileFromLocation(int[] startingLocation, Activity startingActivity) {
         Intent intent = new Intent(startingActivity, UserProfileActivity.class);
@@ -64,6 +73,29 @@ public class UserProfileActivity extends BaseDrawerActivity implements RevealBac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+
+        /*IconData[] data = new IconData[] {
+                new IconData("Delete", android.R.drawable.ic_delete),
+                new IconData("Alert", android.R.drawable.ic_dialog_alert),
+                new IconData("Delete", android.R.drawable.ic_delete),
+                new IconData("Alert", android.R.drawable.ic_dialog_alert),
+                new IconData("Delete", android.R.drawable.ic_delete),
+                new IconData("Alert", android.R.drawable.ic_dialog_alert),
+                new IconData("Delete", android.R.drawable.ic_delete),
+                new IconData("Alert", android.R.drawable.ic_dialog_alert),
+                new IconData("Delete", android.R.drawable.ic_delete),
+                new IconData("Alert", android.R.drawable.ic_dialog_alert),
+                new IconData("Delete", android.R.drawable.ic_delete),
+                new IconData("Alert", android.R.drawable.ic_dialog_alert)
+        };
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvUserProfile);
+        IconAdapter adapter = new IconAdapter(data);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);*/
+
         this.avatarSize = getResources().getDimensionPixelSize(R.dimen.user_profile_avatar_size);
         this.profilePhoto = getString(R.string.user_profile_photo);
 
@@ -75,20 +107,83 @@ public class UserProfileActivity extends BaseDrawerActivity implements RevealBac
                 .transform(new CircleTransformation())
                 .into(ivUserProfilePhoto);
 
-        setupTabs();
-        setupUserProfileGrid();
-        setupRevealBackground(savedInstanceState);
+
+        //setupTabs();
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
+        //setSupportActionBar(toolbar);
+
+        final TabLayout.Tab questions = tabLayout.newTab();
+        final TabLayout.Tab answered = tabLayout.newTab();
+
+        questions.setText("Questions");
+        answered.setText("Answered");
+
+        tabLayout.addTab(questions, 0);
+        tabLayout.addTab(answered, 1);
+
+        tabLayout.setTabTextColors(ContextCompat.getColorStateList(this, R.color.tab_selector));
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.indicator));
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        //setupUserProfileGrid();
+        //setupRevealBackground(savedInstanceState);
+
+        tvfollowers.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        followers(v);
+                    }
+                }
+        );
+        tvfollowing.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        following(v);
+                    }
+                }
+        );
+        btnFollow.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        edit(v);
+                    }
+                }
+        );
+
     }
 
-    private void setupTabs() {
-        tlUserProfileTabs.addTab(tlUserProfileTabs.newTab().setIcon(R.drawable.ic_grid_on_white));
-        tlUserProfileTabs.addTab(tlUserProfileTabs.newTab().setIcon(R.drawable.ic_list_white));
-        tlUserProfileTabs.addTab(tlUserProfileTabs.newTab().setIcon(R.drawable.ic_place_white));
-        tlUserProfileTabs.addTab(tlUserProfileTabs.newTab().setIcon(R.drawable.ic_label_white));
-    }
+    /*private void setupTabs() {
+        tlUserProfileTabs.addTab(tlUserProfileTabs.newTab().setText("Questions"));
+        tlUserProfileTabs.addTab(tlUserProfileTabs.newTab().setText("Answers"));
+    }*/
 
-    private void setupUserProfileGrid() {
-        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+    /*private void setupUserProfileGrid() {
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         rvUserProfile.setLayoutManager(layoutManager);
         rvUserProfile.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -97,8 +192,7 @@ public class UserProfileActivity extends BaseDrawerActivity implements RevealBac
             }
         });
     }
-
-    private void setupRevealBackground(Bundle savedInstanceState) {
+       private void setupRevealBackground(Bundle savedInstanceState) {
         vRevealBackground.setOnStateChangeListener(this);
         if (savedInstanceState == null) {
             final int[] startingLocation = getIntent().getIntArrayExtra(ARG_REVEAL_START_LOCATION);
@@ -112,7 +206,7 @@ public class UserProfileActivity extends BaseDrawerActivity implements RevealBac
             });
         } else {
             vRevealBackground.setToFinishedFrame();
-            userPhotosAdapter.setLockedAnimations(true);
+            //userPhotosAdapter.setLockedAnimations(true);
         }
     }
 
@@ -122,17 +216,30 @@ public class UserProfileActivity extends BaseDrawerActivity implements RevealBac
             rvUserProfile.setVisibility(View.VISIBLE);
             tlUserProfileTabs.setVisibility(View.VISIBLE);
             vUserProfileRoot.setVisibility(View.VISIBLE);
+            String[] values = new String[] { "Android List View",
+                    "Adapter implementation",
+                    "Simple List View In Android",
+                    "Create List View Android",
+                    "Android Example",
+                    "List View Source Code",
+                    "List View Array Adapter",
+                    "Android Example List View"
+            };
             userPhotosAdapter = new UserProfileAdapter(this);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, android.R.id.text1, values);
+
             rvUserProfile.setAdapter(userPhotosAdapter);
-            animateUserProfileOptions();
-            animateUserProfileHeader();
+            //rvUserProfile.setAdapter(userPhotosAdapter);
+            //animateUserProfileOptions();
+            //animateUserProfileHeader();
         } else {
             tlUserProfileTabs.setVisibility(View.INVISIBLE);
             rvUserProfile.setVisibility(View.INVISIBLE);
             vUserProfileRoot.setVisibility(View.INVISIBLE);
         }
-    }
-
+    }*/
+    /*
     private void animateUserProfileOptions() {
         tlUserProfileTabs.setTranslationY(-tlUserProfileTabs.getHeight());
         tlUserProfileTabs.animate().translationY(0).setDuration(300).setStartDelay(USER_OPTIONS_ANIMATION_DELAY).setInterpolator(INTERPOLATOR);
@@ -148,5 +255,35 @@ public class UserProfileActivity extends BaseDrawerActivity implements RevealBac
            ivUserProfilePhoto.animate().translationY(0).setDuration(300).setStartDelay(100).setInterpolator(INTERPOLATOR);
            vUserDetails.animate().translationY(0).setDuration(300).setStartDelay(200).setInterpolator(INTERPOLATOR);
            vUserStats.animate().alpha(1).setDuration(200).setStartDelay(400).setInterpolator(INTERPOLATOR).start();
+    }*/
+
+    public void followers(View v) {
+        Intent i = new Intent(this,Followers.class);
+        this.startActivity(i);
     }
+    public void following(View v) {
+        Intent i = new Intent(this,Following.class);
+        this.startActivity(i);
+    }
+    public void edit(View v) {
+        Intent i = new Intent(this,EditProfileActivity.class);
+        this.startActivity(i);
+    }
+/*
+    @Override
+    public void onStateChange(int state) {
+        if (RevealBackgroundView.STATE_FINISHED == state) {
+            rvUserProfile.setVisibility(View.VISIBLE);
+            tlUserProfileTabs.setVisibility(View.VISIBLE);
+            vUserProfileRoot.setVisibility(View.VISIBLE);
+            userPhotosAdapter = new UserProfileAdapter(this);
+            //rvUserProfile.setAdapter(userPhotosAdapter);
+            //animateUserProfileOptions();
+            //animateUserProfileHeader();
+        } else {
+            tlUserProfileTabs.setVisibility(View.INVISIBLE);
+            rvUserProfile.setVisibility(View.INVISIBLE);
+            vUserProfileRoot.setVisibility(View.INVISIBLE);
+        }
+    }*/
 }

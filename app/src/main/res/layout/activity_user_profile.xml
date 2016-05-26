@@ -7,6 +7,7 @@
 
     <io.github.froger.instamaterial.ui.view.RevealBackgroundView
         android:id="@+id/vRevealBackground"
+        android:layout_weight="0.5"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -16,11 +17,22 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvUserProfile"
+        <!--<android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:id="@+id/rvUserProfile"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        </android.support.v7.widget.RecyclerView>-->
+
+        <!--<android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rvUserProfile"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        </android.support.v7.widget.RecyclerView>-->
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -85,7 +97,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Mobile development passionate."
+                                android:text="160 character long text"
                                 android:textColor="#ffffff"
                                 android:textSize="12sp" />
 
@@ -96,7 +108,7 @@
                                 android:layout_marginRight="24dp"
                                 android:layout_marginTop="8dp"
                                 android:background="@drawable/btn_following"
-                                android:text="following"
+                                android:text="Edit Profile"
                                 android:textColor="#ffffff"
                                 android:textSize="12sp" />
 
@@ -121,14 +133,14 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1167"
+                                android:text=""
                                 android:textColor="#ffffff"
                                 android:textSize="20sp" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="posts"
+                                android:text=""
                                 android:textColor="#ffffff"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -138,7 +150,8 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:id="@+id/Layout1">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -165,6 +178,28 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="#ffffff"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="#ffffff"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:id="@+id/Layout2">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:text="485"
                                 android:textColor="#ffffff"
                                 android:textSize="20sp" />
@@ -173,6 +208,28 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="following"
+                                android:textColor="#ffffff"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textColor="#ffffff"
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=""
                                 android:textColor="#ffffff"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -190,16 +247,24 @@
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                    </android.support.v7.widget.Toolbar>
+                    <ImageView
+                        android:id="@+id/ivLogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:scaleType="center"
+                        android:src="@drawable/img_toolbar_logo" />
+                </android.support.v7.widget.Toolbar>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp">
+                android:layout_height="match_parent"
+                android:id="@+id/framelayout">
 
                 <android.support.design.widget.TabLayout
-                    android:id="@+id/tlUserProfileTabs"
+                    android:id="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="?attr/colorAccent"
@@ -211,6 +276,16 @@
             </FrameLayout>
 
         </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btnCreate"
@@ -226,4 +301,5 @@
             app:elevation="6dp"
             app:pressedTranslationZ="12dp" />
     </android.support.design.widget.CoordinatorLayout>
+
 </RelativeLayout>

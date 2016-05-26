@@ -130,7 +130,7 @@ public class FeedAdapterParse extends ParseRecyclerQueryAdapter<Question , FeedA
                 else{
                     description.setText(desc);
                 }
-                
+
             }
             else if(type == TEXT_QUESTION){
 
