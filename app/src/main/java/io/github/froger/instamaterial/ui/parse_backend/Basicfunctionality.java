@@ -17,6 +17,7 @@ import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -347,9 +348,27 @@ public class Basicfunctionality {
     }
 
     public void likePost(Question question,ParseUser user){
-        Like likeObject;
+        Like likeObject = new Like();
+        likeObject.setQuestion(question);
+        likeObject.setLikedBy(user);
+        likeObject.saveInBackground();
     }
     public void unlikePost(Question question,ParseUser user){
-
+        ParseQuery<Like> query = ParseQuery.getQuery(Like.class);
+        query.whereEqualTo("question" , question);
+        query.whereEqualTo("likedBy",user);
+        query.findInBackground(new FindCallback<Like>() {
+            @Override
+            public void done(List<Like> objects, ParseException e) {
+                if(e == null){
+                    for(ParseObject object: objects){
+                        object.deleteInBackground();
+                    }
+                }
+                else{
+                    //some exception
+                }
+            }
+        });
     }
 }
