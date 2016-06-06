@@ -107,16 +107,11 @@ public class UserProfileActivity extends BaseDrawerActivity {
                 .transform(new CircleTransformation())
                 .into(ivUserProfilePhoto);
 
-
-        //setupTabs();
-
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
-        //setSupportActionBar(toolbar);
-
         final TabLayout.Tab questions = tabLayout.newTab();
         final TabLayout.Tab answered = tabLayout.newTab();
 
@@ -125,8 +120,6 @@ public class UserProfileActivity extends BaseDrawerActivity {
 
         tabLayout.addTab(questions, 0);
         tabLayout.addTab(answered, 1);
-
-        //tabLayout.setTabTextColors(ContextCompat.getColorStateList(this, R.color.tab_selector));
         tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.indicator));
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -139,17 +132,12 @@ public class UserProfileActivity extends BaseDrawerActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
-        //setupUserProfileGrid();
-        //setupRevealBackground(savedInstanceState);
-
         tvfollowers.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -176,87 +164,6 @@ public class UserProfileActivity extends BaseDrawerActivity {
         );
 
     }
-
-    /*private void setupTabs() {
-        tlUserProfileTabs.addTab(tlUserProfileTabs.newTab().setText("Questions"));
-        tlUserProfileTabs.addTab(tlUserProfileTabs.newTab().setText("Answers"));
-    }*/
-
-    /*private void setupUserProfileGrid() {
-        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-        rvUserProfile.setLayoutManager(layoutManager);
-        rvUserProfile.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                userPhotosAdapter.setLockedAnimations(true);
-            }
-        });
-    }
-       private void setupRevealBackground(Bundle savedInstanceState) {
-        vRevealBackground.setOnStateChangeListener(this);
-        if (savedInstanceState == null) {
-            final int[] startingLocation = getIntent().getIntArrayExtra(ARG_REVEAL_START_LOCATION);
-            vRevealBackground.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    vRevealBackground.getViewTreeObserver().removeOnPreDrawListener(this);
-                    vRevealBackground.startFromLocation(startingLocation);
-                    return true;
-                }
-            });
-        } else {
-            vRevealBackground.setToFinishedFrame();
-            //userPhotosAdapter.setLockedAnimations(true);
-        }
-    }
-
-    @Override
-    public void onStateChange(int state) {
-        if (RevealBackgroundView.STATE_FINISHED == state) {
-            rvUserProfile.setVisibility(View.VISIBLE);
-            tlUserProfileTabs.setVisibility(View.VISIBLE);
-            vUserProfileRoot.setVisibility(View.VISIBLE);
-            String[] values = new String[] { "Android List View",
-                    "Adapter implementation",
-                    "Simple List View In Android",
-                    "Create List View Android",
-                    "Android Example",
-                    "List View Source Code",
-                    "List View Array Adapter",
-                    "Android Example List View"
-            };
-            userPhotosAdapter = new UserProfileAdapter(this);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, android.R.id.text1, values);
-
-            rvUserProfile.setAdapter(userPhotosAdapter);
-            //rvUserProfile.setAdapter(userPhotosAdapter);
-            //animateUserProfileOptions();
-            //animateUserProfileHeader();
-        } else {
-            tlUserProfileTabs.setVisibility(View.INVISIBLE);
-            rvUserProfile.setVisibility(View.INVISIBLE);
-            vUserProfileRoot.setVisibility(View.INVISIBLE);
-        }
-    }*/
-    /*
-    private void animateUserProfileOptions() {
-        tlUserProfileTabs.setTranslationY(-tlUserProfileTabs.getHeight());
-        tlUserProfileTabs.animate().translationY(0).setDuration(300).setStartDelay(USER_OPTIONS_ANIMATION_DELAY).setInterpolator(INTERPOLATOR);
-    }
-
-    private void animateUserProfileHeader() {
-           vUserProfileRoot.setTranslationY(-vUserProfileRoot.getHeight());
-           ivUserProfilePhoto.setTranslationY(-ivUserProfilePhoto.getHeight());
-           vUserDetails.setTranslationY(-vUserDetails.getHeight());
-           vUserStats.setAlpha(0);
-
-           vUserProfileRoot.animate().translationY(0).setDuration(300).setInterpolator(INTERPOLATOR);
-           ivUserProfilePhoto.animate().translationY(0).setDuration(300).setStartDelay(100).setInterpolator(INTERPOLATOR);
-           vUserDetails.animate().translationY(0).setDuration(300).setStartDelay(200).setInterpolator(INTERPOLATOR);
-           vUserStats.animate().alpha(1).setDuration(200).setStartDelay(400).setInterpolator(INTERPOLATOR).start();
-    }*/
-
     public void followers(View v) {
         Intent i = new Intent(this,Followers.class);
         this.startActivity(i);
@@ -269,21 +176,4 @@ public class UserProfileActivity extends BaseDrawerActivity {
         Intent i = new Intent(this,EditProfileActivity.class);
         this.startActivity(i);
     }
-/*
-    @Override
-    public void onStateChange(int state) {
-        if (RevealBackgroundView.STATE_FINISHED == state) {
-            rvUserProfile.setVisibility(View.VISIBLE);
-            tlUserProfileTabs.setVisibility(View.VISIBLE);
-            vUserProfileRoot.setVisibility(View.VISIBLE);
-            userPhotosAdapter = new UserProfileAdapter(this);
-            //rvUserProfile.setAdapter(userPhotosAdapter);
-            //animateUserProfileOptions();
-            //animateUserProfileHeader();
-        } else {
-            tlUserProfileTabs.setVisibility(View.INVISIBLE);
-            rvUserProfile.setVisibility(View.INVISIBLE);
-            vUserProfileRoot.setVisibility(View.INVISIBLE);
-        }
-    }*/
 }

@@ -6,6 +6,8 @@
 //CREATE A CLOUD CODE FOR POSTING QUESTION/////
 package io.github.froger.instamaterial.ui.parse_backend;
 
+import android.net.Uri;
+
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -336,6 +338,18 @@ public class Basicfunctionality {
 
     }
     public void followPerson() {
+
+    }
+    public Uri handleImage(ParseFile imageFile){
+        String imageUrl = imageFile.getUrl() ;//live url
+        Uri imageUri = Uri.parse(imageUrl);
+        return imageUri;
+    }
+
+    public void likePost(Question question,ParseUser user){
+        Like likeObject;
+    }
+    public void unlikePost(Question question,ParseUser user){
 
     }
 }
